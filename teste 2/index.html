@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste de Velocidade</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+     <!--
+    =====================================
+    App de Teste de Velocidade (HTML/CSS/JS puro)
+    - Mede Ping (média), Jitter (desvio), Download e Upload.
+    - Conexões paralelas, tamanhos e duração ajustáveis.
+    - Botões Iniciar/Parar, logs detalhados no console e na UI.
+
+    ENDPOINTS PADRÃO (públicos):
+    - Download: https://speed.cloudflare.com/__down?bytes=SIZE
+    - Upload:   https://speed.cloudflare.com/__up
+    - Ping:     https://speed.cloudflare.com/cdn-cgi/trace  (leve)
+
+    Observação: Alguns provedores podem bloquear CORS. Se isso ocorrer, troque por um endpoint seu.
+    Basta hospedar rotas simples que retornem dados (GET) e aceitem POST para upload (descartar o corpo).
+
+    Boas práticas: sem alert(), uso de AbortController, try/catch, métricas robustas.
+  -->
+
+    <div class="wrap">
+        <header>
+            <div class="title">
+                <div class="bolt" aria-hidden="true">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" fill="#0b0f14" />
+                    </svg>
+                </div>
+                <div>
+                    <h1>Teste de Velocidade</h1>
+                    <div class="sub">Ping • Jitter • Download • Upload</div>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="startBtn" title="Iniciar teste">Iniciar</button>
+                <button id="stopBtn" class="danger" title="Parar teste">Parar</button>
+                <button id="copyBtn" class="secondary" title="Copiar resultados">Copiar resultados</button>
+            </div>
+        </header>
+
+        <div class="grid">
+            <section class="card">
+                <div class="pad">
+                    <div class="row">
+                        <div>
+                            <div class="sub">Status</div>
+                            <div id="status" class="big">Pronto</div>
+                        </div>
+                        <div>
+                            <div class="sub" style="text-align:right">Duração total</div>
+                            <div class="big" id="totalTime" style="text-align:right">0.0 s</div>
+                        </div>
+                    </div>
+                    <div class="gauges">
+                        <div class="gauge">
+                            <h3>Ping médio</h3>
+                            <div><span class="big" id="ping">—</span><span class="unit">ms</span></div>
+                            <div class="meter">
+                                <div id="pingBar" class="bar"></div>
+                            </div>
+                        </div>
+                        <div class="gauge">
+                            <h3>Jitter</h3>
+                            <div><span class="big" id="jitter">—</span><span class="unit">ms</span></div>
+                            <div class="meter">
+                                <div id="jitterBar" class="bar"></div>
+                            </div>
+                        </div>
+                        <div class="gauge">
+                            <h3>Download</h3>
+                            <div><span class="big" id="down">—</span><span class="unit">Mbps</span></div>
+                            <div class="meter">
+                                <div id="downBar" class="bar"></div>
+                            </div>
+                        </div>
+                        <div class="gauge">
+                            <h3>Upload</h3>
+                            <div><span class="big" id="up">—</span><span class="unit">Mbps</span></div>
+                            <div class="meter">
+                                <div id="upBar" class="bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="card">
+                <div class="pad">
+                    <h3 style="margin-top:0">Configurações</h3>
+                    <div class="config">
+                        <div>
+                            <label for="threads">Conexões paralelas</label>
+                            <input type="number" id="threads" min="1" max="16" value="4" />
+                        </div>
+                        <div>
+                            <label for="dlSeconds">Duração Download (s)</label>
+                            <input type="number" id="dlSeconds" min="2" max="30" value="8" />
+                        </div>
+                        <div>
+                            <label for="ulSeconds">Duração Upload (s)</label>
+                            <input type="number" id="ulSeconds" min="2" max="30" value="8" />
+                        </div>
+                        <div>
+                            <label for="sizeMB">Tamanho por requisição (MB)</label>
+                            <input type="number" id="sizeMB" min="1" max="100" value="8" />
+                        </div>
+                        <div>
+                            <label for="dlEndpoint">Endpoint Download</label>
+                            <input type="text" id="dlEndpoint" value="https://speed.cloudflare.com/__down" />
+                        </div>
+                        <div>
+                            <label for="ulEndpoint">Endpoint Upload</label>
+                            <input type="text" id="ulEndpoint" value="https://speed.cloudflare.com/__up" />
+                        </div>
+                        <div>
+                            <label for="pingEndpoint">Endpoint Ping</label>
+                            <input type="text" id="pingEndpoint" value="https://speed.cloudflare.com/cdn-cgi/trace" />
+                        </div>
+                        <div>
+                            <label for="samples">Amostras de ping</label>
+                            <input type="number" id="samples" min="5" max="30" value="10" />
+                        </div>
+                    </div>
+                    <div class="hint">Dica: se CORS bloquear, troque pelos seus endpoints. Qualquer arquivo grande serve
+                        para download; no upload, aceite POST e ignore o corpo.</div>
+
+                    <h3 style="margin:16px 0 8px">Logs</h3>
+                    <div id="log" class="log" aria-live="polite"></div>
+                </div>
+            </aside>
+        </div>
+
+        <footer>Feito com HTML + CSS + JS. Nenhum alerta intrusivo, logs detalhados no console. — Você pode estilizar e
+            integrar com seu site.</footer>
+    </div>
+  <script src="script.js"></script>
+</body>
+</html>

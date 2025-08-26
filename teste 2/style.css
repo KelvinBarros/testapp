@@ -1,0 +1,260 @@
+ :root {
+            --bg: #c2d1e2;
+            --card: #111723;
+            --muted: #9fb1c7;
+            --text: #e8f0fe;
+            --accent: #59d185;
+            --accent-2: #6aa9ff;
+            --danger: #ff6b6b;
+            --warn: #ffb703;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+            --radius: 18px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+            background: linear-gradient(180deg, #0b0f14 0%, #0d141c 100%);
+            color: var(--text);
+        }
+
+        .wrap {
+            max-width: 1000px;
+            margin:  auto;
+            padding: 24px
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 18px
+        }
+
+        header .title {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .bolt {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+            box-shadow: var(--shadow)
+        }
+
+        .bolt svg {
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .35))
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin: 0
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: .95rem
+        }
+
+        .grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: 1.3fr 1fr;
+            align-items: stretch
+        }
+
+        .big{
+            width: 90px;
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, .06)
+        }
+
+        .card .pad {
+            padding: 18px
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center
+        }
+
+        button {
+            appearance: none;
+            border: none;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+            color: #0b0f14;
+            font-weight: 700;
+            padding: 12px 18px;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: transform .06s ease, opacity .2s ease
+        }
+
+        button:hover {
+            transform: translateY(-1px)
+        }
+
+        button:active {
+            transform: translateY(0)
+        }
+
+        button.secondary {
+            background: #172232;
+            color: var(--text)
+        }
+
+        button.danger {
+            background: var(--danger);
+            color: #0b0f14
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap
+        }
+
+        .gauges {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 12px
+        }
+
+        @media (max-width:700px) {
+            .gauges {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .gauge {
+            background: #0f1724;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, .05)
+        }
+
+        .gauge h3 {
+            margin: 0 0 8px 0;
+            font-size: .95rem;
+            color: var(--muted)
+        }
+
+        .big {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -.02em
+        }
+
+        .unit {
+            font-size: .95rem;
+            color: var(--muted);
+            margin-left: 6px
+        }
+
+        .meter {
+            height: 10px;
+            background: #0b1220;
+            border-radius: 999px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .06);
+            margin-top: 10px
+        }
+
+        .bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%)
+        }
+
+        .log {
+            height: 180px;
+            overflow: hidden;
+            background: #0d1524;
+            border-radius: 12px;
+            padding: 10px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: .9rem;
+            border: 1px solid rgba(255, 255, 255, .05)
+        }
+
+        .log .muted {
+            color: #7e8aa6
+        }
+
+        .config {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 12px
+        }
+
+        .config label {
+            font-size: .85rem;
+            color: var(--muted)
+        }
+
+        .config input,
+        .config select {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: #0f1724;
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, .06)
+        }
+
+        @media (max-width:900px) {
+            .config {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        .hint {
+            color: var(--muted);
+            font-size: .85rem;
+            margin-top: 6px
+        }
+
+        footer {
+            opacity: .8;
+            color: var(--muted);
+            font-size: .85rem;
+            margin-top: 18px
+        }
+
+        a {
+            color: var(--accent-2);
+            text-decoration: none
+        }
