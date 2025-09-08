@@ -78,10 +78,15 @@
             align-items: stretch
         }
 
-        .big{
-            width: 90px;
-        }
-
+       .big {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    min-width: 100px;         /* largura mínima para evitar "pulos" */
+    text-align: center;       /* centraliza os números */
+    display: inline-block;    /* mantém espaço reservado */
+    white-space: nowrap;      /* impede quebra de linha */
+}
         @media (max-width: 900px) {
             .grid {
                 grid-template-columns: 1fr
@@ -172,11 +177,14 @@
         }
 
         .big {
-            font-size: 2.2rem;
-            font-weight: 800;
-            letter-spacing: -.02em
-        }
-
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    min-width: 100px;         /* largura mínima para evitar "pulos" */
+    text-align: center;       /* centraliza os números */
+    display: inline-block;    /* mantém espaço reservado */
+    white-space: nowrap;      /* impede quebra de linha */
+}
         .unit {
             font-size: .95rem;
             color: var(--muted);
@@ -258,3 +266,5 @@
             color: var(--accent-2);
             text-decoration: none
         }
+
+        
